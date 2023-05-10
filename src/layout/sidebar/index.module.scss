@@ -1,0 +1,27 @@
+.sidebarWrapper {
+  background-color: lime;
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  transition: all 0.2s ease 0s;
+  z-index: 1200;
+  background-color: rgb(34, 43, 54);
+
+  .sidebarMenuList {
+    overflow-x: hidden;
+    max-height: calc(100vh - 70px);
+
+
+    .menusTitle {
+      font-weight: 700;
+      font-size: 12px;
+      margin-top: 20px;
+      margin-left: 15px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      transition: all 0.15s ease 0s;
+      color: rgb(140, 163, 186);
+    }
+
+  }
+}

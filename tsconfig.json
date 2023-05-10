@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./", // 路径配置
+    "outDir": "./dist",
+    "paths": { "@": ["src"], "@/*": ["src/*"] },
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // 要包含在编译中的依赖库文件列表
+    "module": "ESNext", // 指定模块代码生成
+    "skipLibCheck": true, // 跳过所有声明文件的类型检查
+    "allowJs": true, // 允许编译 JavaScript 文件
+    "esModuleInterop": true, // 禁用命名空间引用 (import * as fs from "fs") 启用 CJS/AMD/UMD 风格引用 (import fs from "fs")
+    "allowSyntheticDefaultImports": true, // 允许从没有默认导出的模块进行默认导入
+    "forceConsistentCasingInFileNames": true, //	禁止对同一个文件的不一致的引用。
+    "experimentalDecorators": true, // 启用对ES装饰器的实验性支持
+
+    /* Bundler mode */
+    "moduleResolution": "node", // 使用 Node.js 风格解析模块
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true, // 允许使用 .json 扩展名导入的模块
+    "isolatedModules": true, // 将每个文件作为单独的模块
+    "noEmit": true, // 不输出(意思是不编译代码，只执行类型检查)
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react", // 开启emotion配置
+
+    /* Linting */
+    "strict": true, // 启用所有严格类型检查选项
+    "noUnusedLocals": true, // 报告未使用的本地变量的错误
+    "noUnusedParameters": true, // 报告未使用参数的错误
+    "noFallthroughCasesInSwitch": true, // 报告switch语句的fallthrough错误。（即，不允许switch的case语句贯穿）
+  },
+  "include": ["src", "lib"],
+  "references": [{ "path": "./tsconfig.node.json"}]
+}
