@@ -17,6 +17,16 @@ const Sidebar = () => {
     console.log('路由变化了', location.pathname);
   }, [location]);
 
+  const menuList = [
+    { path: '/home', menuName: '主页', icon: AdbIcon },
+    {
+      path: '/',
+      menuName: '测试',
+      icon: AdbIcon,
+      children: [{ path: '/detail', menuName: '详情页面' }]
+    }
+  ];
+
   return (
     <Box className={styles.sidebarWrapper}>
       <Box
@@ -37,12 +47,23 @@ const Sidebar = () => {
           <Box component="p" className={styles.menusTitle}>
             MANAGEMENT
           </Box>
-          <MenuItem icon={AdbIcon} path="/home">
-            home
-          </MenuItem>
-          <SubMenuItem icon={AdbIcon}>
-            <MenuItem path="/detail">detail</MenuItem>
-          </SubMenuItem>
+          {menuList.map((menu) => {
+            return menu.children ? (
+              <SubMenuItem
+                icon={menu.icon}
+                active={menu.children.filter((child) => child.path === location.pathname)?.length > 0}>
+                {menu.children.map((child, index) => (
+                  <MenuItem icon={child.icon} key={index} path={child.path} active={location.pathname === child.path}>
+                    {child.menuName}
+                  </MenuItem>
+                ))}
+              </SubMenuItem>
+            ) : (
+              <MenuItem icon={menu.icon} path={menu.path} active={location.pathname === menu.path}>
+                {menu.menuName}
+              </MenuItem>
+            );
+          })}
         </Box>
       </SimpleBar>
     </Box>
