@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { createBrowserRouter, Navigate, redirect, type RouteObject } from 'react-router-dom';
+import { createBrowserRouter, redirect, type RouteObject } from 'react-router-dom';
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Permission from '@/components/Permission';
@@ -20,10 +20,10 @@ export const getUserInfo = (): Promise<UserInfo> => {
       resolve({
         name: 'jianjian',
         age: 12,
-        permissionRoutes: ['home', 'list'],
+        permissionRoutes: ['home', 'detail'],
         code: 0
       });
-    }, 1000);
+    }, 0);
   });
 };
 
@@ -72,7 +72,7 @@ const routerConfig: RouteObject[] = [
     id: 'root',
     errorElement: <ErrorBoundary />,
     element: <BasicLayout />,
-    // loader: rootLoader,
+    loader: rootLoader,
     children: [
       {
         path: '/home',

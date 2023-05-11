@@ -1,5 +1,8 @@
 import { West } from '@mui/icons-material';
+import AdbIcon from '@mui/icons-material/Adb';
 import { Box, IconButton } from '@mui/material';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 
 import MenuItem from './menuItem';
@@ -8,6 +11,12 @@ import SubMenuItem from './subMenuItem';
 import styles from './index.module.scss';
 
 const Sidebar = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log('路由变化了', location.pathname);
+  }, [location]);
+
   return (
     <Box className={styles.sidebarWrapper}>
       <Box
@@ -28,9 +37,12 @@ const Sidebar = () => {
           <Box component="p" className={styles.menusTitle}>
             MANAGEMENT
           </Box>
-
-          <MenuItem></MenuItem>
-          <SubMenuItem></SubMenuItem>
+          <MenuItem icon={AdbIcon} path="/home">
+            home
+          </MenuItem>
+          <SubMenuItem icon={AdbIcon}>
+            <MenuItem path="/detail">detail</MenuItem>
+          </SubMenuItem>
         </Box>
       </SimpleBar>
     </Box>

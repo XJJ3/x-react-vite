@@ -41,6 +41,8 @@ module.exports = {
     'react/jsx-uses-react': 'off', // React 17及以后引入了新的 JSX 编译方式，无须在组件中显式地 import React，可关闭
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-vars': 'error',
+    'react/no-unknown-property': ['error', { ignore: ['css'] }],
+    // '@typescript-eslint/no-explicit-any': ['off'],
     'simple-import-sort/imports': [
       'error',
       {

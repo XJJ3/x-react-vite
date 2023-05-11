@@ -21,6 +21,7 @@
     "noEmit": true, // 不输出(意思是不编译代码，只执行类型检查)
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react", // 开启emotion配置
+    
 
     /* Linting */
     "strict": true, // 启用所有严格类型检查选项
@@ -28,6 +29,6 @@
     "noUnusedParameters": true, // 报告未使用参数的错误
     "noFallthroughCasesInSwitch": true, // 报告switch语句的fallthrough错误。（即，不允许switch的case语句贯穿）
   },
-  "include": ["src", "lib"],
+  "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.d.ts", "lib"],
   "references": [{ "path": "./tsconfig.node.json"}]
 }

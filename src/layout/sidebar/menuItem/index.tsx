@@ -1,15 +1,38 @@
-import AdbIcon from '@mui/icons-material/Adb';
-import { Box, Button } from '@mui/material';
+import { Box, ButtonBase } from '@mui/material';
+import { Children, FC, PropsWithChildren } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
 
-const MenuItem = () => {
+interface IProps {
+  icon?: AnyType;
+  path: string;
+  active?: boolean;
+}
+
+const MenuItem: FC<PropsWithChildren<IProps>> = (props) => {
+  const { icon, children, path, active } = props;
+  const Icon = icon;
+
+  const navigate = useNavigate();
+
   return (
     <Box>
-      <Button className={styles.menusItemButton}>
-        <AdbIcon className={styles.menusItemIcon} />
-        <span className={styles.menusItemLabel}>菜单一</span>
-      </Button>
+      <ButtonBase className={`${styles.menusItemButton} ${active && styles.active}`} onClick={() => navigate(path)}>
+        {icon ? <Icon className={styles.menusItemIcon}></Icon> : <div className={styles.menusItemNoIcon}></div>}
+
+        {children ? (
+          Children.map(children, (child) => {
+            return (
+              <Box component="span" className={styles.menusItemLabel}>
+                {child}
+              </Box>
+            );
+          })
+        ) : (
+          <span className={styles.menusItemLabel}>菜单名称</span>
+        )}
+      </ButtonBase>
     </Box>
   );
 };

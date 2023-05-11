@@ -1,30 +1,51 @@
-import AdbIcon from '@mui/icons-material/Adb';
+import { css } from '@emotion/react';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Box, Button } from '@mui/material';
-
-import ChildMenuItem from './childMenuItem';
+import { Box, ButtonBase, Collapse } from '@mui/material';
+import { FC, PropsWithChildren, useState } from 'react';
 
 import styles from './index.module.scss';
 
-const SubMenuItem = () => {
+interface IProps {
+  icon?: AnyType;
+  label?: string;
+  active?: boolean;
+}
+const SubMenuItem: FC<PropsWithChildren<IProps>> = (props) => {
+  const { children, icon, label, active } = props;
+  const Icon = icon;
+
+  const [expandState, setExpandState] = useState(false);
+  const onExpandChild = () => {
+    setExpandState(!expandState);
+  };
+
   return (
-    <Box
-      sx={{
-        '& .expansion-panel': {
-          overflow: 'hidden',
-          transition: 'max-height 0.3s cubic-bezier(0, 0, 0.2, 1) 0s'
-        }
-      }}>
-      <Button className={styles.subMenusItemButton}>
+    <Box>
+      <ButtonBase className={`${styles.subMenusItemButton} ${active && styles.active}`} onClick={onExpandChild}>
         <Box sx={{ paddingLeft: '7px', display: 'flex', alignItems: 'center' }}>
-          <AdbIcon className={styles.menusItemIcon} />
-          <span className={styles.menusItemLabel}>菜单一</span>
+          {/* <AdbIcon className={styles.menusItemIcon} /> */}
+          {icon ? (
+            <Icon className={styles.menusItemIcon}></Icon>
+          ) : (
+            <div
+              css={css`
+                width: 4px;
+                height: 4px;
+                margin-left: 10px;
+                margin-right: 8px;
+                overflow: hidden;
+                border-radius: 50%;
+                background: rgb(36, 153, 239);
+                box-shadow: rgba(36, 153, 239, 0.2) 0px 0px 0px 3px;
+              `}></div>
+          )}
+          <span className={styles.menusItemLabel}>{label || '菜单名称'}</span>
         </Box>
-        <NavigateNextIcon className={styles.menuItemArrow} />
-      </Button>
-      <div className="expansion-panel" style={{ maxHeight: '100px' }}>
-        <ChildMenuItem></ChildMenuItem>
-      </div>
+        <NavigateNextIcon className={styles.menuItemArrow} sx={{ transform: `rotate(${expandState ? 90 : 0}deg)` }} />
+      </ButtonBase>
+      <Collapse in={expandState} collapsedSize={0}>
+        <div>{children}</div>
+      </Collapse>
     </Box>
   );
 };
