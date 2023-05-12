@@ -48,7 +48,7 @@ const LazyLoad = (Component: React.LazyExoticComponent<() => JSX.Element>, code?
  * @description 这个loader函数返回值可以在页面中通过 useRouteLoaderData(id)或者useLoaderData获取
  */
 const rootLoader = async () => {
-  console.log('页面加载前请求用户信息');
+  // console.log('页面加载前请求用户信息');
   // 这里用假的接口模拟下
   const { permissionRoutes, name, age, code } = await getUserInfo();
   // 假设20001代表登陆过期

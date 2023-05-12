@@ -1,10 +1,11 @@
+import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 
 const Home = () => {
   return (
-    <div>
+    <Box>
       <Button>Hello World</Button>
-    </div>
+    </Box>
   );
 };
 export default Home;

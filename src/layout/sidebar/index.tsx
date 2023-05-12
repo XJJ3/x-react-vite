@@ -1,23 +1,29 @@
 import { West } from '@mui/icons-material';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Box, IconButton } from '@mui/material';
-import { useEffect } from 'react';
+import { Box, Button, IconButton, useTheme } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
+
+import { RootState, useAppDispatch, useAppSelector } from '@/store';
+import { setThemeMode } from '@/store/appSlice';
 
 import MenuItem from './menuItem';
 import SubMenuItem from './subMenuItem';
 
 import styles from './index.module.scss';
 
+interface MenuType {
+  path: string;
+  menuName: string;
+  icon?: AnyType;
+  children?: MenuType[];
+}
+
 const Sidebar = () => {
   const location = useLocation();
+  const theme = useTheme();
 
-  useEffect(() => {
-    console.log('路由变化了', location.pathname);
-  }, [location]);
-
-  const menuList = [
+  const menuList: MenuType[] = [
     { path: '/home', menuName: '主页', icon: AdbIcon },
     {
       path: '/',
@@ -27,8 +33,16 @@ const Sidebar = () => {
     }
   ];
 
+  const app = useAppSelector((state: RootState) => state.app);
+  const dispatch = useAppDispatch();
+  const onChangeTheme = () => {
+    dispatch(setThemeMode(theme.palette.mode === 'light' ? 'dark' : 'light'));
+  };
+
   return (
-    <Box className={styles.sidebarWrapper}>
+    <Box className={styles.sidebarWrapper} sx={{ backgroundColor: theme.palette.cardBg.main }}>
+      <Button onClick={onChangeTheme}>改变</Button>
+      <span>{theme.palette.mode}</span>
       <Box
         sx={{
           display: 'flex',
@@ -37,7 +51,9 @@ const Sidebar = () => {
           padding: '24px 16px 8px 32px',
           height: '70px'
         }}>
-        <Box sx={{ fontWeight: 700, fontSize: '20px', color: 'white' }}>Unitree</Box>
+        <Box sx={{ fontWeight: 700, fontSize: '20px', color: theme.palette.mode === 'dark' ? 'white' : 'black' }}>
+          Unitree
+        </Box>
         <IconButton>
           <West sx={{ color: 'white' }} />
         </IconButton>
@@ -47,19 +63,24 @@ const Sidebar = () => {
           <Box component="p" className={styles.menusTitle}>
             MANAGEMENT
           </Box>
-          {menuList.map((menu) => {
+          {menuList.map((menu, index) => {
             return menu.children ? (
               <SubMenuItem
+                key={`menu_${index}`}
                 icon={menu.icon}
                 active={menu.children.filter((child) => child.path === location.pathname)?.length > 0}>
-                {menu.children.map((child, index) => (
-                  <MenuItem icon={child.icon} key={index} path={child.path} active={location.pathname === child.path}>
+                {menu.children.map((child, idx) => (
+                  <MenuItem icon={child.icon} key={idx} path={child.path} active={location.pathname === child.path}>
                     {child.menuName}
                   </MenuItem>
                 ))}
               </SubMenuItem>
             ) : (
-              <MenuItem icon={menu.icon} path={menu.path} active={location.pathname === menu.path}>
+              <MenuItem
+                key={`menu_${index}`}
+                icon={menu.icon}
+                path={menu.path}
+                active={location.pathname === menu.path}>
                 {menu.menuName}
               </MenuItem>
             );

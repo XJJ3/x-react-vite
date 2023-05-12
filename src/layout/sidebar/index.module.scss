@@ -1,11 +1,10 @@
 .sidebarWrapper {
-  background-color: lime;
   width: 280px;
   height: 100vh;
   position: fixed;
   transition: all 0.2s ease 0s;
   z-index: 1200;
-  background-color: rgb(34, 43, 54);
+  // background-color: rgb(34, 43, 54);
 
   .sidebarMenuList {
     overflow-x: hidden;
