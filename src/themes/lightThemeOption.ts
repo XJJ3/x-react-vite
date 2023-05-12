@@ -1,10 +1,11 @@
 export default {
   palette: {
     mode: 'light',
+    secondary: {
+      main: 'rgb(95, 116, 141)'
+    },
     cardBg: {
       contrastText: 'rgba(0, 0, 0, 0.87)',
-      dark: 'white',
-      light: 'white',
       main: 'white'
     },
     background: {

@@ -59,7 +59,7 @@ const Sidebar = () => {
         </IconButton>
       </Box>
       <SimpleBar className={styles.sidebarMenuList}>
-        <Box sx={{ paddingLeft: '16px', paddingRight: '16px', height: '100%' }}>
+        <Box sx={{ paddingLeft: '16px', paddingRight: '16px', height: '100%', color: theme.palette.secondary.main }}>
           <Box component="p" className={styles.menusTitle}>
             MANAGEMENT
           </Box>

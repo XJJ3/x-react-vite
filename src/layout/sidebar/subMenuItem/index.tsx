@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Box, ButtonBase, Collapse } from '@mui/material';
+import { Box, ButtonBase, Collapse, useTheme } from '@mui/material';
 import { FC, PropsWithChildren, useState } from 'react';
 
 import styles from './index.module.scss';
@@ -18,6 +18,8 @@ const SubMenuItem: FC<PropsWithChildren<IProps>> = (props) => {
   const onExpandChild = () => {
     setExpandState(!expandState);
   };
+
+  const theme = useTheme();
 
   return (
     <Box>
@@ -41,7 +43,13 @@ const SubMenuItem: FC<PropsWithChildren<IProps>> = (props) => {
           )}
           <span className={styles.menusItemLabel}>{label || '菜单名称'}</span>
         </Box>
-        <NavigateNextIcon className={styles.menuItemArrow} sx={{ transform: `rotate(${expandState ? 90 : 0}deg)` }} />
+        <NavigateNextIcon
+          className={styles.menuItemArrow}
+          sx={{
+            transform: `rotate(${expandState ? 90 : 0}deg)`,
+            color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgb(177, 201, 220)'
+          }}
+        />
       </ButtonBase>
       <Collapse in={expandState} collapsedSize={0}>
         <div>{children}</div>
