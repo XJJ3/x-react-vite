@@ -1,13 +1,12 @@
 import { West } from '@mui/icons-material';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Box, Button, IconButton, useTheme } from '@mui/material';
+import { Box, IconButton, useTheme } from '@mui/material';
+import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 
-import { RootState, useAppDispatch, useAppSelector } from '@/store';
-import { setThemeMode } from '@/store/appSlice';
-
 import MenuItem from './menuItem';
+import SidebarWrapper from './sidebarWrapper';
 import SubMenuItem from './subMenuItem';
 
 import styles from './index.module.scss';
@@ -19,9 +18,10 @@ interface MenuType {
   children?: MenuType[];
 }
 
-const Sidebar = () => {
+const Sidebar: FC = (props) => {
   const location = useLocation();
-  const theme = useTheme();
+  const { palette } = useTheme();
+  const { mode, secondary, cardBg } = palette;
 
   const menuList: MenuType[] = [
     { path: '/home', menuName: '主页', icon: AdbIcon },
@@ -33,16 +33,8 @@ const Sidebar = () => {
     }
   ];
 
-  const app = useAppSelector((state: RootState) => state.app);
-  const dispatch = useAppDispatch();
-  const onChangeTheme = () => {
-    dispatch(setThemeMode(theme.palette.mode === 'light' ? 'dark' : 'light'));
-  };
-
-  return (
-    <Box className={styles.sidebarWrapper} sx={{ backgroundColor: theme.palette.cardBg.main }}>
-      <Button onClick={onChangeTheme}>改变</Button>
-      <span>{theme.palette.mode}</span>
+  const sidebarContent = (
+    <Box className={styles.sidebarWrapper} sx={{ backgroundColor: cardBg.main }}>
       <Box
         sx={{
           display: 'flex',
@@ -51,15 +43,13 @@ const Sidebar = () => {
           padding: '24px 16px 8px 32px',
           height: '70px'
         }}>
-        <Box sx={{ fontWeight: 700, fontSize: '20px', color: theme.palette.mode === 'dark' ? 'white' : 'black' }}>
-          Unitree
-        </Box>
+        <Box sx={{ fontWeight: 700, fontSize: '20px', color: mode === 'dark' ? 'white' : 'black' }}>Unitree</Box>
         <IconButton>
-          <West sx={{ color: 'white' }} />
+          <West sx={{ color: mode === 'dark' ? 'white' : 'rgba(18, 31, 67, 0.54)' }} />
         </IconButton>
       </Box>
       <SimpleBar className={styles.sidebarMenuList}>
-        <Box sx={{ paddingLeft: '16px', paddingRight: '16px', height: '100%', color: theme.palette.secondary.main }}>
+        <Box sx={{ paddingLeft: '16px', paddingRight: '16px', height: '100%', color: secondary.main }}>
           <Box component="p" className={styles.menusTitle}>
             MANAGEMENT
           </Box>
@@ -89,6 +79,8 @@ const Sidebar = () => {
       </SimpleBar>
     </Box>
   );
+
+  return <SidebarWrapper>{sidebarContent}</SidebarWrapper>;
 };
 
 export default Sidebar;
